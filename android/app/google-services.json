@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "824959142298",
+    "project_id": "munchkins-d2531",
+    "storage_bucket": "munchkins-d2531.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:824959142298:android:9e4dbe0b603eaef5745223",
+        "android_client_info": {
+          "package_name": "com.munchkins.app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDQFJuwCQXRXM2YxHT95EzN_QWrO5Wy5No"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
