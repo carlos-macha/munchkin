@@ -1,3 +1,4 @@
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:munchkins/components/color_select.dart';
@@ -6,7 +7,7 @@ import 'package:munchkins/components/gender_button.dart';
 import 'package:munchkins/components/icon_content.dart';
 import 'package:munchkins/const.dart';
 import 'package:munchkins/enums/color.dart';
-import 'package:munchkins/enums/gender.dart';
+import 'package:munchkins/interface/player.dart';
 
 class NewPlayerScreen extends StatefulWidget {
   static const String id = 'new_player_screen';
@@ -21,7 +22,23 @@ class _NewPlayerScreenState extends State<NewPlayerScreen> {
     height: 20,
   );
   color SelectedColor = color.blue;
-  Gender? selectedGender;
+  bool selectedGender = true;
+  DatabaseReference ref = FirebaseDatabase.instance.ref("players");
+  String name = 'Hero';
+
+
+  void save() {
+    
+    Player player = Player(
+      name: name,
+      gender: selectedGender,
+      colors: SelectedColor.toString(),
+      level: 0,
+      strength: 0,
+      power: 0
+    );
+    ref.push().set(player.toMap()).then((e) {Navigator.pop(context);});
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -61,6 +78,11 @@ class _NewPlayerScreenState extends State<NewPlayerScreen> {
                     Padding(
                       padding: EdgeInsets.all(20),
                       child: TextField(
+                        onChanged: (text) {
+                          setState(() {
+                            name = text;
+                          });
+                        },
                         style: TextStyle(color: textColorLight),
                         decoration: textFieldDecoration,
                       ),
@@ -83,7 +105,7 @@ class _NewPlayerScreenState extends State<NewPlayerScreen> {
                       children: [
                         Expanded(
                           child: GenderButton(
-                            colour: selectedGender == Gender.male
+                            colour: selectedGender == true
                                 ? backgroundColor
                                 : backgroundColorDark,
                             cardChild: IconContent(
@@ -91,8 +113,7 @@ class _NewPlayerScreenState extends State<NewPlayerScreen> {
                             onPress: () {
                               setState(
                                 () {
-                                  selectedGender =
-                                      Gender.male;
+                                  selectedGender = true;
                                 },
                               );
                             },
@@ -100,15 +121,14 @@ class _NewPlayerScreenState extends State<NewPlayerScreen> {
                         ),
                         Expanded(
                           child: GenderButton(
-                            colour: selectedGender == Gender.female
+                            colour: selectedGender == false
                                 ? backgroundColor
                                 : backgroundColorDark,
                             cardChild: IconContent(
                                 icon: FontAwesomeIcons.venus, label: 'FEMEA'),
                             onPress: () {
                               setState(() {
-                                selectedGender =
-                                    Gender.female;
+                                selectedGender = false;
                               });
                             },
                           ),
@@ -219,7 +239,7 @@ class _NewPlayerScreenState extends State<NewPlayerScreen> {
                       foregroundColor: backgroundColorDark,
                       backgroundColor: textColorLight,
                     ),
-                    onPressed: () {},
+                    onPressed: save,
                     child: Text(
                       'Salvar',
                       style: TextStyle(fontSize: 20),

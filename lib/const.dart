@@ -15,3 +15,5 @@ InputDecoration textFieldDecoration = InputDecoration(
 );
 
 TextStyle styleText = TextStyle(color: textColorLight, fontSize: 20);
+
+TextStyle styleTextBoxGame = TextStyle(color: Colors.black, fontSize: 30,);
